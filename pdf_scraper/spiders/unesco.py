@@ -16,7 +16,7 @@ class UnescopdfSpider(scrapy.Spider):
     name = "unesco"
     allowed_domains = ["unesco.org"]
     start_urls = (
-        'http://www.unesco.org/ulis/cgi-bin/ulis.pl?req=0&mt=100&mt_p=%3C&by=3&sc1=1&look=default&sc2=1&lin=1&futf8=1&gp=1&hist=1&pn=1&text=1&text_p=inc',
+        'http://www.unesco.org/ulis/cgi-bin/ulis.pl?req=0&mt2=100&mt2_p=%3C&by=2&sc1=1&look=default&sc2=1&lin=1&futf8=1&gp=1&hist=1&pn=1&mt=3%2C1%2C5%2C6%2C12%2C7%2C10&mtX=3&mtX=1&mtX=5%2C6&mtX=12&mtX=7&mtX=10&pdf=1&tx=&tx_p=near&ti=&ti_p=inc&text=&text_p=phrase+words&ds=&ds_tie=and&ds_2=&au=&la=&dafr=&dato=&dc=&ib=&submit=Ok',
     )
     def parse (self, response):
         
