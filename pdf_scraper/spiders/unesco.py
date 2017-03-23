@@ -62,6 +62,10 @@ class UnescopdfSpider(scrapy.Spider):
         for link in pdf_links:
             pdf_link_list.append(link.url)
 
+
+        for key, value in json_dict.items():
+            json_dict[key] = ' '.join(value.split())
+
         items['url'] = response.url
         items['pdf_links'] = pdf_link_list
         items['json_data'] = json.dumps(json_dict, ensure_ascii=False).encode('utf8')
