@@ -9,6 +9,8 @@ import scrapy
 
 
 class PdfScraperItem(scrapy.Item):
-    # define the fields for your item here like:
-    # name = scrapy.Field()
+    url = scrapy.Field()
+    pdf_links  = scrapy.Field()
+    json_data = scrapy.Field()
+
     pass
