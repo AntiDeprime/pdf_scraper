@@ -12,5 +12,3 @@ class PdfScraperItem(scrapy.Item):
     url = scrapy.Field()
     pdf_links  = scrapy.Field()
     json_data = scrapy.Field()
-
-    pass
