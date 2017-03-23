@@ -21,14 +21,15 @@ class UnescopdfSpider(scrapy.Spider):
     def parse (self, response):
         
         self.logger.info('Moving to the page: %s', response.url)
-        
+        # Extract pdf page links 
         page_links = LinkExtractor(
             allow_domains='unesco.org',
             restrict_xpaths='//span[@class="record"]'\
             ).extract_links(response)
+        # Collect them
         for page in page_links:
             yield scrapy.Request (page.url, callback = self.parse_page)
-
+        # When done, move to the next page 
         next_page_url = response.xpath("//a[text()='[next]']/@href").extract_first()
         if next_page_url:
             yield scrapy.Request (next_page_url, callback = self.parse)
@@ -51,7 +52,7 @@ class UnescopdfSpider(scrapy.Spider):
                     pair = {key:value}
                     json_dict.update(pair)
                     
-        # find and exctract links to pdf files
+        # find and extract links to pdf files
         pdf_links = LinkExtractor(
             allow='\.pdf$',
             allow_domains='unesdoc.unesco.org',
@@ -62,10 +63,11 @@ class UnescopdfSpider(scrapy.Spider):
         for link in pdf_links:
             pdf_link_list.append(link.url)
 
-
+        # Remove newlines from json data 
         for key, value in json_dict.items():
             json_dict[key] = ' '.join(value.split())
-
+        
+        # Create scrapy items 
         items['url'] = response.url
         items['pdf_links'] = pdf_link_list
         items['json_data'] = json.dumps(json_dict, ensure_ascii=False).encode('utf8')
