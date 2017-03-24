@@ -19,6 +19,7 @@ class TableSpider(scrapy.Spider):
             yield scrapy.Request (page.url, callback = self.parse_page)
         # When done, move to the next page 
         next_page_url = response.xpath(self.next_page_xpath).extract_first()
+        # if url is not full 
         parsed_uri = urlparse(response.url)
         domain = '{uri.scheme}://{uri.netloc}/'.format(uri=parsed_uri)
         next_page_url = urljoin(domain, next_page_url)
@@ -62,9 +63,9 @@ class TableSpider(scrapy.Spider):
         items['json_data'] = json.dumps(json_dict, ensure_ascii=False).encode('utf8')
 
         # return only if everything is found
-        #if (items['url'] and items['pdf_links'] and items['json_data']):
-        self.logger.info("Success! %s", response.url)
-        return items
+        if (items['url'] and items['pdf_links'] and items['json_data']):
+            self.logger.info("Success! %s", response.url)
+            return items
 
 
 
